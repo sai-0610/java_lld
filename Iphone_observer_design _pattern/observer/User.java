@@ -2,15 +2,15 @@ package observer;
 
 public class User implements Observer {
     private String name;
-    private String emailOrPhone;
+    private String contact;
 
-    public User(String name, String emailOrPhone) {
+    public User(String name, String contact) {
         this.name = name;
-        this.emailOrPhone = emailOrPhone;
+        this.contact = contact;
     }
 
     @Override
     public void update(String message) {
-        System.out.println("Notification to " + name + " (" + emailOrPhone + "): " + message);
+        System.out.println("Notification to " + name + " (" + contact + "): " + message);
     }
 }

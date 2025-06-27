@@ -7,27 +7,24 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Take initial stock
         System.out.print("Enter initial stock of iPhone 15: ");
         int initialStock = sc.nextInt();
         sc.nextLine();
+
         iPhone15Stock stock = new iPhone15Stock(initialStock);
 
-        // Register users
         System.out.print("Enter number of customers to register: ");
         int n = sc.nextInt();
         sc.nextLine();
+
         for (int i = 0; i < n; i++) {
             System.out.println("\nEnter details for customer #" + (i + 1));
             System.out.print("Name: ");
             String name = sc.nextLine();
             System.out.print("Email or Phone: ");
             String contact = sc.nextLine();
-            User user = new User(name, contact);
-            stock.add(user);
+            stock.add(new User(name, contact));
         }
-
-        System.out.println("\nInitial stock: " + initialStock + " iPhone 15(s).");
 
         while (true) {
             System.out.println("\nChoose an option:");
@@ -41,16 +38,11 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.print("Enter quantity to sell: ");
-                    int sellQty = sc.nextInt();
-                    stock.sell(sellQty);
-                    if (stock.getStock() == 0) {
-                        stock.notifyObservers();
-                    }
+                    stock.sell(sc.nextInt());
                     break;
                 case 2:
                     System.out.print("Enter quantity to add: ");
-                    int addQty = sc.nextInt();
-                    stock.addStock(addQty);
+                    stock.addStock(sc.nextInt());
                     break;
                 case 3:
                     stock.showCurrentStock();

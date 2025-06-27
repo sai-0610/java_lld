@@ -6,11 +6,12 @@ import java.util.List;
 
 public class iPhone15Stock implements Observable {
     private int stock;
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     public iPhone15Stock(int initialStock) {
         this.stock = initialStock;
         this.observers = new ArrayList<>();
+        checkAndNotifyIfOutOfStock();
     }
 
     @Override
@@ -24,18 +25,9 @@ public class iPhone15Stock implements Observable {
     }
 
     @Override
-    public void notifyObservers() {
-        String message = "iPhone 15 is out of stock!";
+    public void notifyObservers(String message) {
         for (Observer observer : observers) {
             observer.update(message);
-        }
-    }
-
-    @Override
-    public void setData(int stock) {
-        this.stock = stock;
-        if (this.stock == 0) {
-            notifyObservers();
         }
     }
 
@@ -50,9 +42,7 @@ public class iPhone15Stock implements Observable {
         }
         stock -= quantity;
         System.out.println("Sold " + quantity + " iPhone 15(s). Current stock: " + stock);
-        if (stock == 0) {
-            notifyObservers();
-        }
+        checkAndNotifyIfOutOfStock();
     }
 
     public void addStock(int quantity) {
@@ -65,12 +55,12 @@ public class iPhone15Stock implements Observable {
     }
 
     public void showCurrentStock() {
-         System.out.println("Current stock: " + stock + " iPhone 15(s).");
+        System.out.println("Current stock: " + stock + " iPhone 15(s).");
     }
 
-    public int getStock() {
-    return stock;
+    private void checkAndNotifyIfOutOfStock() {
+        if (stock == 0) {
+            notifyObservers("iPhone 15 is out of stock!");
+        }
     }
-
-
 }
