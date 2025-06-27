@@ -1,18 +1,67 @@
 import observer.User;
 import observable.iPhone15Stock;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        iPhone15Stock stock = new iPhone15Stock(5);
+        Scanner sc = new Scanner(System.in);
 
-        User user1 = new User("Alice", "alice@example.com");
-        User user2 = new User("Bob", "9123456789");
+        // Take initial stock
+        System.out.print("Enter initial stock of iPhone 15: ");
+        int initialStock = sc.nextInt();
+        sc.nextLine();
+        iPhone15Stock stock = new iPhone15Stock(initialStock);
 
-        stock.add(user1);
-        stock.add(user2);
+        // Register users
+        System.out.print("Enter number of customers to register: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for customer #" + (i + 1));
+            System.out.print("Name: ");
+            String name = sc.nextLine();
+            System.out.print("Email or Phone: ");
+            String contact = sc.nextLine();
+            User user = new User(name, contact);
+            stock.add(user);
+        }
 
-        stock.sell(2);
-        stock.addStock(4);
-        stock.sell(7);
+        System.out.println("\nInitial stock: " + initialStock + " iPhone 15(s).");
+
+        while (true) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Sell iPhones");
+            System.out.println("2. Add iPhones to stock");
+            System.out.println("3. Show current stock");
+            System.out.println("4. Exit");
+            System.out.print("Your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter quantity to sell: ");
+                    int sellQty = sc.nextInt();
+                    stock.sell(sellQty);
+                    if (stock.getStock() == 0) {
+                        stock.notifyObservers();
+                    }
+                    break;
+                case 2:
+                    System.out.print("Enter quantity to add: ");
+                    int addQty = sc.nextInt();
+                    stock.addStock(addQty);
+                    break;
+                case 3:
+                    stock.showCurrentStock();
+                    break;
+                case 4:
+                    System.out.println("Exiting... Goodbye!");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please enter 1-4.");
+            }
+        }
     }
 }

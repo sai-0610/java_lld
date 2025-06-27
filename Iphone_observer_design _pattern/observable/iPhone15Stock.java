@@ -63,4 +63,14 @@ public class iPhone15Stock implements Observable {
         stock += quantity;
         System.out.println("Added " + quantity + " iPhone 15(s). Current stock: " + stock);
     }
+
+    public void showCurrentStock() {
+         System.out.println("Current stock: " + stock + " iPhone 15(s).");
+    }
+
+    public int getStock() {
+    return stock;
+    }
+
+
 }

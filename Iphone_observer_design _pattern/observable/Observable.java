@@ -7,4 +7,6 @@ public interface Observable {
     void remove(Observer observer);
     void notifyObservers();
     void setData(int stock);
+    void showCurrentStock();
+    int getStock();
 }
